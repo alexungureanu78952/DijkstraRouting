@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map>
+    <nodes>
+        <node id="0" x="100" y="100"/>
+        <node id="1" x="400" y="200"/>
+        <node id="2" x="700" y="100"/>
+        <node id="3" x="200" y="500"/>
+        <node id="4" x="600" y="500"/>
+    </nodes>
+    <edges>
+        <edge source="0" destination="1"/>
+        <edge source="0" destination="3"/>
+        <edge source="1" destination="2"/>
+        <edge source="1" destination="3"/>
+        <edge source="2" destination="4"/>
+        <edge source="3" destination="4"/>
+    </edges>
+</map>
