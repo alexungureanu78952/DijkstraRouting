@@ -27,7 +27,7 @@ public class MapParser {
         double minLon = Double.MAX_VALUE, maxLon = Double.MIN_VALUE;
         double minLat = Double.MAX_VALUE, maxLat = Double.MIN_VALUE;
 
-        // First pass: find min/max coordinates
+
         for (int i = 0; i < nodeNodeList.getLength(); i++) {
             Element nodeElement = (Element) nodeNodeList.item(i);
             double lat = Double.parseDouble(nodeElement.getAttribute("latitude"));
@@ -42,15 +42,15 @@ public class MapParser {
         double latScale = 500 / (maxLat - minLat);
         double scale = Math.min(lonScale, latScale);
 
-        // Second pass: create nodes with scaled coordinates
+
         for (int i = 0; i < nodeNodeList.getLength(); i++) {
             Element nodeElement = (Element) nodeNodeList.item(i);
             String id = nodeElement.getAttribute("id");
             double lat = Double.parseDouble(nodeElement.getAttribute("latitude"));
             double lon = Double.parseDouble(nodeElement.getAttribute("longitude"));
             
-            double scaledX = (lon - minLon) * scale + 50; // 50px padding
-            double scaledY = (lat - minLat) * scale + 50; // 50px padding
+            double scaledX = (lon - minLon) * scale + 50;
+            double scaledY = (lat - minLat) * scale + 50;
 
             Node node = new Node(id, scaledX, scaledY);
             graph.addNode(node);
