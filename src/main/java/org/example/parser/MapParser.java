@@ -24,26 +24,49 @@ public class MapParser {
         doc.getDocumentElement().normalize();
 
         NodeList nodeNodeList = doc.getElementsByTagName("node");
+        double minLon = Double.MAX_VALUE, maxLon = Double.MIN_VALUE;
+        double minLat = Double.MAX_VALUE, maxLat = Double.MIN_VALUE;
+
+        // First pass: find min/max coordinates
+        for (int i = 0; i < nodeNodeList.getLength(); i++) {
+            Element nodeElement = (Element) nodeNodeList.item(i);
+            double lat = Double.parseDouble(nodeElement.getAttribute("latitude"));
+            double lon = Double.parseDouble(nodeElement.getAttribute("longitude"));
+            if (lon < minLon) minLon = lon;
+            if (lon > maxLon) maxLon = lon;
+            if (lat < minLat) minLat = lat;
+            if (lat > maxLat) maxLat = lat;
+        }
+
+        double lonScale = 700 / (maxLon - minLon);
+        double latScale = 500 / (maxLat - minLat);
+        double scale = Math.min(lonScale, latScale);
+
+        // Second pass: create nodes with scaled coordinates
         for (int i = 0; i < nodeNodeList.getLength(); i++) {
             Element nodeElement = (Element) nodeNodeList.item(i);
             String id = nodeElement.getAttribute("id");
-            double x = Double.parseDouble(nodeElement.getAttribute("x"));
-            double y = Double.parseDouble(nodeElement.getAttribute("y"));
-            Node node = new Node(id, x, y);
+            double lat = Double.parseDouble(nodeElement.getAttribute("latitude"));
+            double lon = Double.parseDouble(nodeElement.getAttribute("longitude"));
+            
+            double scaledX = (lon - minLon) * scale + 50; // 50px padding
+            double scaledY = (lat - minLat) * scale + 50; // 50px padding
+
+            Node node = new Node(id, scaledX, scaledY);
             graph.addNode(node);
             nodeMap.put(id, node);
         }
 
-        NodeList edgeNodeList = doc.getElementsByTagName("edge");
+        NodeList edgeNodeList = doc.getElementsByTagName("arc");
         for (int i = 0; i < edgeNodeList.getLength(); i++) {
             Element edgeElement = (Element) edgeNodeList.item(i);
-            String sourceId = edgeElement.getAttribute("source");
-            String destId = edgeElement.getAttribute("destination");
+            String sourceId = edgeElement.getAttribute("from");
+            String destId = edgeElement.getAttribute("to");
+            double length = Double.parseDouble(edgeElement.getAttribute("length"));
             Node source = nodeMap.get(sourceId);
             Node destination = nodeMap.get(destId);
             if (source != null && destination != null) {
-                graph.addEdge(source, destination);
-                graph.addEdge(destination, source);
+                graph.addEdge(source, destination, length);
             }
         }
         return graph;

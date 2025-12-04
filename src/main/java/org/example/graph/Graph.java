@@ -14,6 +14,11 @@ public class Graph {
         adj.putIfAbsent(node, new ArrayList<>());
     }
 
+    public void addEdge(Node source, Node destination, double weight) {
+        Edge edge = new Edge(source, destination, weight);
+        adj.get(source).add(edge);
+    }
+
     public void addEdge(Node source, Node destination) {
         Edge edge = new Edge(source, destination);
         adj.get(source).add(edge);

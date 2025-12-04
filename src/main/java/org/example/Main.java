@@ -11,7 +11,7 @@ public class Main {
         SwingUtilities.invokeLater(() -> {
             try {
                 MapParser parser = new MapParser();
-                Graph graph = parser.parse("src/main/resources/luxembourg.xml");
+                Graph graph = parser.parse("src/main/resources/Harta_Luxemburg.xml");
                 MainFrame frame = new MainFrame(graph);
                 frame.setVisible(true);
             } catch (Exception e) {
