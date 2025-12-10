@@ -19,11 +19,6 @@ public class Graph {
         adj.get(source).add(edge);
     }
 
-    public void addEdge(Node source, Node destination) {
-        Edge edge = new Edge(source, destination);
-        adj.get(source).add(edge);
-    }
-
     public List<Node> getNodes() {
         return nodes;
     }
