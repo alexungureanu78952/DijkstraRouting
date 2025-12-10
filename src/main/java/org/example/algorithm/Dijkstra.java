@@ -4,20 +4,13 @@ import org.example.graph.Edge;
 import org.example.graph.Graph;
 import org.example.graph.Node;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Set;
+import java.util.*;
 
 public class Dijkstra {
     public List<Edge> findShortestPath(Graph graph, Node start, Node end) {
         Map<Node, Double> distances = new HashMap<>();
         Map<Node, Edge> predecessors = new HashMap<>();
-        PriorityQueue<Node> pq = new PriorityQueue<>((a, b) -> Double.compare(distances.get(a), distances.get(b)));
+        PriorityQueue<Node> pq = new PriorityQueue<>(Comparator.comparingDouble(distances::get));
         Set<Node> visited = new HashSet<>();
 
         for (Node node : graph.getNodes()) {
