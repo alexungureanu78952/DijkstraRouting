@@ -83,24 +83,6 @@ private int clickCount = 0;
                 repaint();
             }
         });
-
-        addMouseWheelListener(new MouseWheelListener() {
-            @Override
-            public void mouseWheelMoved(MouseWheelEvent e) {
-                double oldScale = scale;
-                if (e.getWheelRotation() < 0) {
-                    scale *= 1.1;
-                } else {
-                    scale /= 1.1;
-                }
-                double mouseX = e.getX();
-                double mouseY = e.getY();
-
-                offsetX = mouseX - (mouseX - offsetX) * (scale / oldScale);
-                offsetY = mouseY - (mouseY - offsetY) * (scale / oldScale);
-                repaint();
-            }
-        });
     }
 
     private Point2D transformPoint(java.awt.Point p) {

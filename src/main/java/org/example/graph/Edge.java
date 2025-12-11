@@ -11,12 +11,6 @@ public class Edge {
         this.weight = weight;
     }
 
-    public Edge(Node source, Node destination) {
-        this.source = source;
-        this.destination = destination;
-        this.weight = Math.sqrt(Math.pow(destination.getX() - source.getX(), 2) + Math.pow(destination.getY() - source.getY(), 2));
-    }
-
     public Node getSource() {
         return source;
     }
